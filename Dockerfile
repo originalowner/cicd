@@ -1,14 +1,23 @@
-# Use the Official CentOS Apache HTTPD Server Image
-FROM centos/httpd
+# Base image
+FROM python:3.8
 
-# Download and Unzip the Web Content
-ADD https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip /var/www/html/
-WORKDIR /var/www/html
-RUN yum install -y unzip && unzip photogenic.zip && rm photogenic.zip
+# Set the working directory inside the container
+WORKDIR /app
 
-# Expose Port 80 For HTTPD
-EXPOSE 80
+# Copy the requirements file
+COPY requirements.txt .
 
-# Start Apache HTTPD Server
-CMD ["httpd", "-D", "FOREGROUND"]
+# Install the project dependencies
+RUN pip install -r requirements.txt
 
+# Copy the application code into the container
+COPY . .
+
+# Expose the port the Flask application will be listening on
+EXPOSE 5000
+
+# Set environment variables, if necessary
+# ENV MY_ENV_VAR=value
+
+# Run the Flask application
+CMD ["python", "app.py"]
