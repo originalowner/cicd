@@ -11,7 +11,6 @@ phases:
     
   build:
     commands:
-      - cp index.html /var/www/html/
       - echo "Build Test Succesfull."
     
   post_build:
@@ -20,4 +19,4 @@ phases:
       
 artifacts:
   files:
-    - /var/www/html/index.html
+    - index.html
